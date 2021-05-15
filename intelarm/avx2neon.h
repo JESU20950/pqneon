@@ -131,5 +131,71 @@ static inline int64x2x2_t _mm256_bsrli_epi128(int64x2x2_t a, const int imm8){
 	return a;
 }
 
+static inline int64x2x2_t _mm256_mullo_epi16(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vmulq_s16((int16x8_t) a.val[0], (int16x8_t) b.val[0]);
+	a.val[1] = (int64x2_t) vmulq_s16((int16x8_t) a.val[1], (int16x8_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_add_epi16(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vaddq_s16((int16x8_t) a.val[0], (int16x8_t) b.val[0]);
+	a.val[1] = (int64x2_t) vaddq_s16((int16x8_t) a.val[1], (int16x8_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_sub_epi16(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vsubq_s16((int16x8_t) a.val[0], (int16x8_t) b.val[0]);
+	a.val[1] = (int64x2_t) vsubq_s16((int16x8_t) a.val[1], (int16x8_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_slli_epi16(int64x2x2_t a, const int imm8) {
+	a.val[0] = (int64x2_t) vshlq_n_s16((int16x8_t) a.val[0], imm8);
+	a.val[1] = (int64x2_t) vshlq_n_s16((int16x8_t) a.val[1], imm8);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_srli_epi16(int64x2x2_t a, const int imm8) {
+	a.val[0] = (int64x2_t) vshrq_n_u16((uint16x8_t) a.val[0], imm8);
+	a.val[1] = (int64x2_t) vshrq_n_u16((uint16x8_t) a.val[1], imm8);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpacklo_epi16(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip1q_s16((int16x8_t) a.val[0], (int16x8_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip1q_s16((int16x8_t) a.val[1], (int16x8_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpackhi_epi16(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip2q_s16((int16x8_t) a.val[0], (int16x8_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip2q_s16((int16x8_t) a.val[1], (int16x8_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpacklo_epi32(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip1q_s32((int32x4_t) a.val[0], (int32x4_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip1q_s32((int32x4_t) a.val[1], (int32x4_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpackhi_epi32(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip2q_s32((int32x4_t) a.val[0], (int32x4_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip2q_s32((int32x4_t) a.val[1], (int32x4_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpacklo_epi64(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip1q_s64((int64x2_t) a.val[0], (int64x2_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip1q_s64((int64x2_t) a.val[1], (int64x2_t) b.val[1]);
+	return a;
+}
+
+static inline int64x2x2_t _mm256_unpackhi_epi64(int64x2x2_t a, int64x2x2_t b) {
+	a.val[0] = (int64x2_t) vzip2q_s64((int64x2_t) a.val[0], (int64x2_t) b.val[0]);
+	a.val[1] = (int64x2_t) vzip2q_s64((int64x2_t) a.val[1], (int64x2_t) b.val[1]);
+	return a;
+}
+
 
 #endif

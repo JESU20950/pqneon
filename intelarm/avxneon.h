@@ -169,10 +169,44 @@ static inline float64x2x2_t  _mm256_permute2f128_pd(float64x2x2_t a, float64x2x2
         }
 	return result;
 }
+
 static inline float64x2_t _mm256_castpd256_pd128(float64x2x2_t a){
 	return a.val[0];
 }
 
+static inline int64x2x2_t _mm256_setzero_si256() {
+	int64x2x2_t result;
+	result.val[0] = (int64x2_t) vdupq_n_s16((int16_t) 0);
+	result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) 0);
+	return result;
+}
 
+static inline int64x2x2_t  _mm256_permute2f128_si256(int64x2x2_t a, int64x2x2_t b, const int imm8){
+	int64x2x2_t result;
+	int64x2_t aux[4];
+	aux[0x00] = a.val[0];
+	aux[0x01] = a.val[1];
+	aux[0x02] = b.val[0];
+	aux[0x03] = b.val[1];
+	if ((imm8&0x08)== 0x08){
+		result.val[0] = vdupq_n_s64((int64_t) 0);
+	}else{
+		result.val[0] = aux[imm8&0x03];
+	}
+	int imm8_aux = (imm8 >> 4);
+	if ((imm8_aux&0x08) == 0x08){
+                result.val[1] = vdupq_n_s64((int64_t) 0);
+        }else{
+                result.val[1] = aux[imm8_aux&0x03];
+        }
+	return result;
+}
+
+static inline int64x2x2_t _mm256_set1_epi16(short a) {
+	int64x2x2_t result;
+	result.val[0] = (int64x2_t) vdupq_n_s16((int16_t) a);
+	result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) a);
+	return result;
+}
 
 #endif
