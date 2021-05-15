@@ -1,9 +1,9 @@
-.PHONY: clean
+.PHONY: all clean
 
 ALGORITHMS = crypto_sign/falcon-512
 
 $(ALGORITHMS):
-	+$(MAKE) -C $(ALGORITHMS)
+	cd $(ALGORITHMS) && $(MAKE)
 
 clean:
 	+$(MAKE) -C $(ALGORITHMS)
