@@ -131,5 +131,9 @@ static inline int64x2x2_t _mm256_bsrli_epi128(int64x2x2_t a, const int imm8){
 	return a;
 }
 
-
+static inline int64x2x2_t _mm256_mullo_epi16(int64x2x2_t a, int64x2x2_t b){
+	a.val[0] = (int64x2_t) vmulq_s8((int8x16_t) a.val[0], (int8x16_t) b.val[0]);
+	a.val[1] = (int64x2_t) vmulq_s8((int8x16_t) a.val[1], (int8x16_t) b.val[1]);
+	return a;
+}
 #endif

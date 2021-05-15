@@ -1,7 +1,7 @@
 #ifndef POLY_H
 #define POLY_H
 #include "SABER_params.h"
-#include <immintrin.h>
+#include "intelarm.h"
 #include <stdint.h>
 
 typedef union {
