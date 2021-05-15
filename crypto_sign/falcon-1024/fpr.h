@@ -1,5 +1,5 @@
-#ifndef PQCLEAN_FALCON1024_AVX2_FPR_H
-#define PQCLEAN_FALCON1024_AVX2_FPR_H
+#ifndef PQCLEAN_FALCON1024_NEON_FPR_H
+#define PQCLEAN_FALCON1024_NEON_FPR_H
 
 /*
  * Floating-point operations.
@@ -35,7 +35,7 @@
 
 /* ====================================================================== */
 
-#include <immintrin.h>
+#include <intelarm.h>
 #include <math.h>
 
 #define FMADD(a, b, c)   _mm256_add_pd(_mm256_mul_pd(a, b), c)
@@ -235,7 +235,7 @@ fpr_sqrt(fpr x) {
      * To avoid this dependency, we use intrinsics or inline assembly
      * on recognized platforms:
      *
-     *  - If AVX2 is explicitly enabled, then we use SSE2 intrinsics.
+     *  - If NEON is explicitly enabled, then we use SSE2 intrinsics.
      *
      *  - On GCC/Clang with SSE maths, we use SSE2 intrinsics.
      *
@@ -282,7 +282,7 @@ fpr_expm_p63(fpr x, fpr ccs) {
 
 
     /*
-     * AVX2 implementation uses more operations than Horner's method,
+     * NEON implementation uses more operations than Horner's method,
      * but with a lower expression tree depth. This helps because
      * additions and multiplications have a latency of 4 cycles on
      * a Skylake, but the CPU can issue two of them per cycle.
@@ -339,10 +339,10 @@ fpr_expm_p63(fpr x, fpr ccs) {
 
 }
 
-#define fpr_gm_tab   PQCLEAN_FALCON1024_AVX2_fpr_gm_tab
+#define fpr_gm_tab   PQCLEAN_FALCON1024_NEON_fpr_gm_tab
 extern const fpr fpr_gm_tab[];
 
-#define fpr_p2_tab   PQCLEAN_FALCON1024_AVX2_fpr_p2_tab
+#define fpr_p2_tab   PQCLEAN_FALCON1024_NEON_fpr_p2_tab
 extern const fpr fpr_p2_tab[];
 
 /* ====================================================================== */

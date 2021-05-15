@@ -40,7 +40,7 @@
 
 /* see inner.h */
 int
-PQCLEAN_FALCON1024_AVX2_get_seed(void *seed, size_t len) {
+PQCLEAN_FALCON1024_NEON_get_seed(void *seed, size_t len) {
     (void)seed;
     if (len == 0) {
         return 1;
@@ -50,9 +50,9 @@ PQCLEAN_FALCON1024_AVX2_get_seed(void *seed, size_t len) {
 
 /* see inner.h */
 void
-PQCLEAN_FALCON1024_AVX2_prng_init(prng *p, inner_shake256_context *src) {
+PQCLEAN_FALCON1024_NEON_prng_init(prng *p, inner_shake256_context *src) {
     inner_shake256_extract(src, p->state.d, 56);
-    PQCLEAN_FALCON1024_AVX2_prng_refill(p);
+    PQCLEAN_FALCON1024_NEON_prng_refill(p);
 }
 
 /*
@@ -64,13 +64,13 @@ PQCLEAN_FALCON1024_AVX2_prng_init(prng *p, inner_shake256_context *src) {
  * vectors that work across architectures, so we enforce little-endian
  * interpretation where applicable. Moreover, output words are "spread
  * out" over the output buffer with the interleaving pattern that is
- * naturally obtained from the AVX2 implementation that runs eight
+ * naturally obtained from the NEON implementation that runs eight
  * ChaCha20 instances in parallel.
  *
  * The block counter is XORed into the first 8 bytes of the IV.
  */
 void
-PQCLEAN_FALCON1024_AVX2_prng_refill(prng *p) {
+PQCLEAN_FALCON1024_NEON_prng_refill(prng *p) {
 
     static const uint32_t CW[] = {
         0x61707865, 0x3320646e, 0x79622d32, 0x6b206574
@@ -159,7 +159,7 @@ PQCLEAN_FALCON1024_AVX2_prng_refill(prng *p) {
 
     /*
      * Add initial state back and encode the result in the destination
-     * buffer. We can dump the AVX2 values "as is" because the non-AVX2
+     * buffer. We can dump the NEON values "as is" because the non-NEON
      * code uses a compatible order of values.
      */
     for (u = 0; u < 16; u ++) {
@@ -173,7 +173,7 @@ PQCLEAN_FALCON1024_AVX2_prng_refill(prng *p) {
 
 /* see inner.h */
 void
-PQCLEAN_FALCON1024_AVX2_prng_get_bytes(prng *p, void *dst, size_t len) {
+PQCLEAN_FALCON1024_NEON_prng_get_bytes(prng *p, void *dst, size_t len) {
     uint8_t *buf;
 
     buf = dst;
@@ -189,7 +189,7 @@ PQCLEAN_FALCON1024_AVX2_prng_get_bytes(prng *p, void *dst, size_t len) {
         len -= clen;
         p->ptr += clen;
         if (p->ptr == sizeof p->buf.d) {
-            PQCLEAN_FALCON1024_AVX2_prng_refill(p);
+            PQCLEAN_FALCON1024_NEON_prng_refill(p);
         }
     }
 }
