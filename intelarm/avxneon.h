@@ -176,8 +176,7 @@ static inline float64x2_t _mm256_castpd256_pd128(float64x2x2_t a){
 
 static inline int64x2x2_t _mm256_setzero_si256() {
 	int64x2x2_t result;
-	result.val[0] = (int64x2_t) vdupq_n_s16((int16_t) 0);
-	result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) 0);
+	result.val[0] = result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) 0);
 	return result;
 }
 
@@ -204,8 +203,7 @@ static inline int64x2x2_t  _mm256_permute2f128_si256(int64x2x2_t a, int64x2x2_t 
 
 static inline int64x2x2_t _mm256_set1_epi16(short a) {
 	int64x2x2_t result;
-	result.val[0] = (int64x2_t) vdupq_n_s16((int16_t) a);
-	result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) a);
+	result.val[0] = result.val[1] = (int64x2_t) vdupq_n_s16((int16_t) a);
 	return result;
 }
 
